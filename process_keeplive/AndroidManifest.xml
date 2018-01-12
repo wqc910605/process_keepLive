@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.test.zysnail.www"
+          android:installLocation="internalOnly">
+
+    
+    <application
+        android:name=".tinker.app.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/theme_logo"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+       
+
+        <!-- 进程保活的activity -->
+        <service
+            android:name=".process_keeplive.KeepLiveService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":KeepLiveService"/>
+        <service
+            android:name=".process_keeplive.LiveService"
+            android:process=":live_service"/>
+        <service
+            android:name=".process_keeplive.LiveService2"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+            android:process=":live_service">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name=".process_keeplive.MyJobService"
+            android:enabled="true"
+            android:exported="true"/>
+
+        <activity
+            android:name=".process_keeplive.LiveActivity"
+            android:theme="@style/LiveStyle"/>
+        <receiver android:name=".process_keeplive.TestBroadcastReceiver"
+                  android:exported="true"
+                  android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" /> <!-- 手机开屏广播 -->
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="my.broadcast.test" /> <!-- 自定义广播 -->
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_OFF"></action>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_ON"></action>
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>
